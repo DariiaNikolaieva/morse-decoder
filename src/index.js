@@ -38,12 +38,26 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    const newArr = [];
+    let chunkedArr = [];
     for (let i = 0; i < expr.length; i += 10) {
-        const chunk = expr.slice(i, i + 10);
-        newArr.push(chunk);
+      const chunk = expr.slice(i, i + 10);
+      chunkedArr.push(chunk);
     }
-      return newArr
+    let morseArr = []
+    chunkedArr.forEach((el) => {
+          el = el.replace(/10/g,'.').replace(/11/g,'-').replace(/00/g,'');
+          morseArr.push(el);
+      });
+    let str = '';
+      morseArr.forEach((el) => {
+          if(el === '**********'){
+              str += ' ';
+          } else{
+              str += MORSE_TABLE[el];
+          }
+      });
+  
+      return str;
 }
 
 module.exports = {
